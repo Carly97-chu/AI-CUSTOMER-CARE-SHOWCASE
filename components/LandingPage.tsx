@@ -1,7 +1,12 @@
 import React from 'react';
-import { Play, LineChart, Github, ArrowRight } from 'lucide-react';
+import { Play, LineChart, Github, ArrowRight, ExternalLink } from 'lucide-react';
+import { ViewState } from '../types';
 
-export const LandingPage: React.FC = () => {
+interface LandingPageProps {
+  onNavigate: (view: ViewState) => void;
+}
+
+export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
   return (
     <div className="relative min-h-screen overflow-hidden">
        {/* Subtle Background Glows */}
@@ -10,7 +15,7 @@ export const LandingPage: React.FC = () => {
 
       <header className="text-center py-20 px-5 animate-fade-in-down">
         <div className="inline-block px-3 py-1 mb-6 text-xs font-medium tracking-wide text-primary border border-primary/20 rounded-full bg-primary/5 uppercase">
-          Case Study
+          Case Study Showcase
         </div>
         <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-white">
           AI Customer Care <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Automation</span>
@@ -23,7 +28,7 @@ export const LandingPage: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6 pb-16 grid grid-cols-1 md:grid-cols-2 gap-8">
         
         {/* CARD 1: FRONT-END */}
-        <div className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden animate-fade-in-up">
+        <div className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 group relative overflow-hidden animate-fade-in-up">
           <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
              <Play size={120} />
           </div>
@@ -32,15 +37,23 @@ export const LandingPage: React.FC = () => {
             <div className="mb-6">
               <span className="text-xs font-bold tracking-widest text-primary uppercase mb-2 block">The Assistant</span>
               <h2 className="text-3xl font-bold text-white mb-4">AI Support Agent</h2>
-              <p className="text-textMuted leading-relaxed">
+              <p className="text-textMuted leading-relaxed mb-6">
                 An intelligent bot that learns from PDF manuals to answer technical queries instantly, 24/7.
               </p>
+              
+              <button 
+                onClick={() => onNavigate(ViewState.CHAT_DEMO)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primaryDark transition-all group/btn"
+              >
+                PROVA LA CHAT DEMO
+                <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+              </button>
             </div>
 
             <div className="mt-auto space-y-4">
                <div className="bg-background/50 p-4 rounded-xl border border-white/5">
                   <div className="flex items-start gap-3">
-                    <span className="text-warning mt-1">⚠️</span>
+                    <span className="text-warning mt-1 text-lg">⚠️</span>
                     <div>
                       <h4 className="text-sm font-semibold text-white">Problem</h4>
                       <p className="text-xs text-textMuted mt-1">Repetitive technical questions overwhelming the support team.</p>
@@ -50,7 +63,7 @@ export const LandingPage: React.FC = () => {
 
                <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
                   <div className="flex items-start gap-3">
-                    <span className="text-primary mt-1">🤖</span>
+                    <span className="text-primary mt-1 text-lg">🤖</span>
                     <div>
                       <h4 className="text-sm font-semibold text-white">Solution</h4>
                       <p className="text-xs text-textMuted mt-1">Gemini AI parses documentation to provide accurate, instant answers.</p>
@@ -62,7 +75,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* CARD 2: BACK-END */}
-        <div className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-secondary/50 transition-colors duration-500 group relative overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <div className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-secondary/50 transition-all duration-300 group relative overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
              <LineChart size={120} />
           </div>
@@ -71,15 +84,23 @@ export const LandingPage: React.FC = () => {
              <div className="mb-6">
               <span className="text-xs font-bold tracking-widest text-secondary uppercase mb-2 block">The Analyst</span>
               <h2 className="text-3xl font-bold text-white mb-4">Automated Intelligence</h2>
-              <p className="text-textMuted leading-relaxed">
+              <p className="text-textMuted leading-relaxed mb-6">
                 A backend system that audits conversation quality and generates business insights automatically.
               </p>
+
+              <button 
+                onClick={() => onNavigate(ViewState.ANALYSIS_DEMO)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-secondary text-white text-sm font-semibold hover:opacity-90 transition-all group/btn"
+              >
+                PROVA LA DASHBOARD DEMO
+                <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+              </button>
             </div>
 
             <div className="mt-auto space-y-4">
                <div className="bg-background/50 p-4 rounded-xl border border-white/5">
                   <div className="flex items-start gap-3">
-                    <span className="text-warning mt-1">⚠️</span>
+                    <span className="text-warning mt-1 text-lg">⚠️</span>
                     <div>
                       <h4 className="text-sm font-semibold text-white">Problem</h4>
                       <p className="text-xs text-textMuted mt-1">Unstructured chat data making trend analysis impossible.</p>
@@ -89,7 +110,7 @@ export const LandingPage: React.FC = () => {
 
                <div className="bg-secondary/5 p-4 rounded-xl border border-secondary/10">
                   <div className="flex items-start gap-3">
-                    <span className="text-secondary mt-1">📊</span>
+                    <span className="text-secondary mt-1 text-lg">📊</span>
                     <div>
                       <h4 className="text-sm font-semibold text-white">Solution</h4>
                       <p className="text-xs text-textMuted mt-1">Automated "Critic" AI that tags, scores, and visualizes data.</p>
@@ -112,7 +133,7 @@ export const LandingPage: React.FC = () => {
         >
           <Github size={20} /> 
           <span>VIEW PROJECT ON GITHUB</span>
-          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          <ExternalLink size={14} className="opacity-50 group-hover:translate-x-0.5 transition-transform" />
         </a>
       </div>
 

@@ -11,19 +11,19 @@ function App() {
     switch (currentView) {
       case ViewState.CHAT_DEMO:
         return (
-          <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+          <div className="min-h-screen flex items-center justify-center p-4 bg-background animate-fade-in-up">
             <ChatInterface onBack={() => setCurrentView(ViewState.HOME)} />
           </div>
         );
       case ViewState.ANALYSIS_DEMO:
         return (
-          <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+          <div className="min-h-screen flex items-center justify-center p-4 bg-background animate-fade-in-up">
             <Dashboard onBack={() => setCurrentView(ViewState.HOME)} />
           </div>
         );
       case ViewState.HOME:
       default:
-        return <LandingPage />;
+        return <LandingPage onNavigate={(view) => setCurrentView(view)} />;
     }
   };
 
