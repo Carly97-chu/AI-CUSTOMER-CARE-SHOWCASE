@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, LineChart, Github, ArrowRight, ExternalLink } from 'lucide-react';
+import { Play, LineChart, Github, ExternalLink } from 'lucide-react';
 import { ViewState } from '../types';
 
 interface LandingPageProps {
@@ -40,14 +40,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
               <p className="text-textMuted leading-relaxed mb-6">
                 An intelligent bot that learns from PDF manuals to answer technical queries instantly, 24/7.
               </p>
-              
-              <button 
-                onClick={() => onNavigate(ViewState.CHAT_DEMO)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primaryDark transition-all group/btn"
-              >
-                PROVA LA CHAT DEMO
-                <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-              </button>
             </div>
 
             <div className="mt-auto space-y-4">
@@ -87,14 +79,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
               <p className="text-textMuted leading-relaxed mb-6">
                 A backend system that audits conversation quality and generates business insights automatically.
               </p>
-
-              <button 
-                onClick={() => onNavigate(ViewState.ANALYSIS_DEMO)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-secondary text-white text-sm font-semibold hover:opacity-90 transition-all group/btn"
-              >
-                PROVA LA DASHBOARD DEMO
-                <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-              </button>
             </div>
 
             <div className="mt-auto space-y-4">
