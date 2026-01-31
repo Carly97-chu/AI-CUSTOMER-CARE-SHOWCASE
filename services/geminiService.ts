@@ -1,8 +1,8 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AnalysisData, MockChatLog } from "../types";
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+// Inizializzazione centralizzata
+const getAIClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 
 // System instruction for the Customer Support Assistant
 const ASSISTANT_SYSTEM_INSTRUCTION = `
@@ -23,17 +23,20 @@ Be concise, professional, and use a reassuring tone in English.
 
 export const sendMessageToGemini = async (message: string, history: { role: string; parts: { text: string }[] }[]) => {
   try {
-    const model = 'gemini-2.5-flash';
+    const ai = getAIClient();
     const chat = ai.chats.create({
-      model,
+      model: 'gemini-3-flash-preview',
       config: {
         systemInstruction: ASSISTANT_SYSTEM_INSTRUCTION,
       },
-      history: history.map(h => ({ role: h.role, parts: h.parts }))
+      history: history.map(h => ({ 
+        role: h.role === 'model' ? 'model' : 'user', 
+        parts: h.parts 
+      }))
     });
 
-    const result = await chat.sendMessage({ message });
-    return result.text;
+    const response = await chat.sendMessage({ message });
+    return response.text;
   } catch (error) {
     console.error("Gemini Chat Error:", error);
     throw error;
@@ -42,7 +45,7 @@ export const sendMessageToGemini = async (message: string, history: { role: stri
 
 export const analyzeChatLogs = async (logs: MockChatLog[]): Promise<AnalysisData> => {
   try {
-    const model = 'gemini-2.5-flash';
+    const ai = getAIClient();
     const logsText = logs.map(l => `[${l.timestamp}] ${l.customer}: ${l.message}`).join('\n');
     
     const prompt = `
@@ -51,15 +54,15 @@ export const analyzeChatLogs = async (logs: MockChatLog[]): Promise<AnalysisData
       LOGS:
       ${logsText}
       
-      Return a JSON with:
-      1. sentimentScore: a number from 0 (very negative) to 100 (very positive).
-      2. topics: an array of objects {name, count} with the top 3 main topics discussed.
-      3. summary: a short summary in English of the general trend (max 30 words).
-      4. urgentIssues: list of any urgent issues detected.
+      Return a JSON with exactly these fields:
+      1. sentimentScore (0-100)
+      2. topics (array of {name, count})
+      3. summary (string, max 30 words)
+      4. urgentIssues (array of strings)
     `;
 
-    const result = await ai.models.generateContent({
-      model,
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -74,7 +77,8 @@ export const analyzeChatLogs = async (logs: MockChatLog[]): Promise<AnalysisData
                 properties: {
                   name: { type: Type.STRING },
                   count: { type: Type.NUMBER }
-                }
+                },
+                required: ["name", "count"]
               }
             },
             summary: { type: Type.STRING },
@@ -82,15 +86,16 @@ export const analyzeChatLogs = async (logs: MockChatLog[]): Promise<AnalysisData
               type: Type.ARRAY, 
               items: { type: Type.STRING } 
             }
-          }
+          },
+          required: ["sentimentScore", "topics", "summary", "urgentIssues"]
         }
       }
     });
 
-    if (result.text) {
-      return JSON.parse(result.text) as AnalysisData;
+    if (response.text) {
+      return JSON.parse(response.text.trim()) as AnalysisData;
     }
-    throw new Error("No data returned");
+    throw new Error("Empty response from AI");
   } catch (error) {
     console.error("Gemini Analysis Error:", error);
     throw error;

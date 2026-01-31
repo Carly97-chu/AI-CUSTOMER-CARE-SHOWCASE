@@ -27,8 +27,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
 
       <div className="max-w-6xl mx-auto px-6 pb-16 grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        {/* CARD 1: FRONT-END */}
-        <div className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 group relative overflow-hidden animate-fade-in-up">
+        {/* CARD 1: FRONT-END (Interactive) */}
+        <div 
+          onClick={() => onNavigate(ViewState.CHAT_DEMO)}
+          className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 group relative overflow-hidden animate-fade-in-up cursor-pointer hover:bg-surfaceHighlight/40"
+        >
           <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
              <Play size={120} />
           </div>
@@ -36,10 +39,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
           <div className="relative z-10 flex flex-col h-full">
             <div className="mb-6">
               <span className="text-xs font-bold tracking-widest text-primary uppercase mb-2 block">The Assistant</span>
-              <h2 className="text-3xl font-bold text-white mb-4">AI Support Agent</h2>
+              <h2 className="text-3xl font-bold text-white mb-4 group-hover:text-primary transition-colors">AI Support Agent</h2>
               <p className="text-textMuted leading-relaxed mb-6">
                 An intelligent bot that learns from PDF manuals to answer technical queries instantly, 24/7.
               </p>
+              <span className="text-[10px] text-primary font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Clicca per la Demo →</span>
             </div>
 
             <div className="mt-auto space-y-4">
@@ -66,8 +70,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* CARD 2: BACK-END */}
-        <div className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-secondary/50 transition-all duration-300 group relative overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        {/* CARD 2: BACK-END (Interactive) */}
+        <div 
+          onClick={() => onNavigate(ViewState.ANALYSIS_DEMO)}
+          className="bg-surface border border-white/5 rounded-2xl p-8 hover:border-secondary/50 transition-all duration-300 group relative overflow-hidden animate-fade-in-up cursor-pointer hover:bg-surfaceHighlight/40" style={{ animationDelay: '0.2s' }}
+        >
           <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
              <LineChart size={120} />
           </div>
@@ -75,10 +82,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
           <div className="relative z-10 flex flex-col h-full">
              <div className="mb-6">
               <span className="text-xs font-bold tracking-widest text-secondary uppercase mb-2 block">The Analyst</span>
-              <h2 className="text-3xl font-bold text-white mb-4">Automated Intelligence</h2>
+              <h2 className="text-3xl font-bold text-white mb-4 group-hover:text-secondary transition-colors">Automated Intelligence</h2>
               <p className="text-textMuted leading-relaxed mb-6">
                 A backend system that audits conversation quality and generates business insights automatically.
               </p>
+              <span className="text-[10px] text-secondary font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Clicca per la Demo →</span>
             </div>
 
             <div className="mt-auto space-y-4">
